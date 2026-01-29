@@ -1,5 +1,21 @@
 def gale_shapley(n, hos_prefs, stu_prefs):
+    if n == 0 or not hos_prefs or not stu_prefs:
+        return []
 
+    if len(hos_prefs) != n or len(stu_prefs) != n:
+        raise ValueError("Number of hospitals and students does not match the length of their preference lists.")
+
+    for i, prefs in enumerate(hos_prefs, 1):
+        if sorted(prefs) != list(range(1, n + 1)):
+            raise ValueError(f"Hospital {i} preference list does not contain all students exactly once.")
+
+    for i, prefs in enumerate(stu_prefs, 1):
+        if sorted(prefs) != list(range(1, n + 1)):
+            raise ValueError(f"Student {i} preference list does not contain all hospitals exactly once.")
+        
+    if n == 1:
+        return [1]
+    
     hos_prefs = [None] + hos_prefs
     stu_prefs = [None] + stu_prefs
 
@@ -26,7 +42,7 @@ def gale_shapley(n, hos_prefs, stu_prefs):
                 free_hos.pop(0)
                 free_hos.append(curr)
 
-    return hos_matches[1:] 
+    return hos_matches[1:]
 
 def read_input(filename):
     with open(filename, "r") as f:
