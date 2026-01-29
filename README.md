@@ -6,9 +6,9 @@ UFID: 15965003
 Kalim Qazi
 UFID: 85459363
 
-How to complie/run this project: Make sure you have the input.txt file in the same directory as the main.py. Then all you have to do is run the project -> python main.py.
+How to complie/run this project: Make sure you have the input.txt file in the same directory(Prog 1) as the main.py. Then all you have to do is run the project -> python main.py. You will see the output in the output.txt file. 
 
-When you run main.py both matcher and verifier will run with the test cases in the input.txt file. No additional work is needed. 
+The matching alogrithm will work with main.py. For the verify function you will have to run the verify.py file (python verify.py). For this also make sure the output.txt is in the same directory. You will see the output in the terminal. Do not change the formatting of either the input or output files. 
 
 You can add more test cases to the input.txt file. However, you have to be carefull and follow the format of the previous test cases. 
 
