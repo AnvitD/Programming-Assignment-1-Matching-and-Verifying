@@ -27,11 +27,37 @@ def gale_shapley(n, hos_prefs, stu_prefs):
 
     return hos_matches[1:], stu_matches[1:]
 
-print(gale_shapley( 3,
-    [[1,2,3], 
-     [2,3,1], 
-     [2,1,3]], 
-    [[2,1,3],  
-     [1,2,3],  
-     [1,2,3]]
-))  
+def read_input(filename):
+    with open(filename, "r") as f:
+        lines = [line.strip() for line in f if line.strip()]
+
+    index = 0
+    test_cases = []
+
+    while index < len(lines):
+        n = int(lines[index])
+        index += 1
+
+        hos_prefs = []
+        stu_prefs = []
+
+        for _ in range(n):
+            hos_prefs.append(list(map(int, lines[index].split())))
+            index += 1
+
+        for _ in range(n):
+            stu_prefs.append(list(map(int, lines[index].split())))
+            index += 1
+
+        test_cases.append((n, hos_prefs, stu_prefs))
+
+    return test_cases
+
+
+def write_output(filename, results):
+    with open(filename, "w") as f:
+        for case_index, matches in enumerate(results):
+            for i, s in enumerate(matches, start=1):
+                f.write(f"{i} {s}\n")
+            if case_index != len(results) - 1:
+                f.write("\n") 
