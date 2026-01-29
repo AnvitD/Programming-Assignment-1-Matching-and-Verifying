@@ -14,6 +14,8 @@ You can add more test cases to the input.txt file. However, you have to be caref
 
 Assumptions: The algorithm follows a hospital-centric view. 
 
-Graph: 
+Graph: For GS Algortihm
+
+<img width="640" height="480" alt="Figure_1" src="https://github.com/user-attachments/assets/96f67cb1-ac00-4c97-91da-cc4d12714a87" />
 
 
