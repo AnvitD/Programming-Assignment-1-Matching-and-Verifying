@@ -16,6 +16,7 @@ Assumptions: The algorithm follows a hospital-centric view.
 
 Graph: For GS Algortihm
 
-<img width="640" height="480" alt="Figure_1" src="https://github.com/user-attachments/assets/96f67cb1-ac00-4c97-91da-cc4d12714a87" />
+<img width="640" height="480" alt="gsalgoscal" src="https://github.com/user-attachments/assets/7ca571e9-efb5-4363-acc5-a8c917b58d49" />
+
 
 
