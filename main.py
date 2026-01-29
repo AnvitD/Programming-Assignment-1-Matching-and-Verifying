@@ -1,4 +1,5 @@
 def gale_shapley(n, hos_prefs, stu_prefs):
+
     hos_prefs = [None] + hos_prefs
     stu_prefs = [None] + stu_prefs
 
@@ -6,8 +7,8 @@ def gale_shapley(n, hos_prefs, stu_prefs):
     stu_matches = [None] * (n + 1)
     free_hos = list(range(1, n + 1))
     next_proposal_index = [0] * (n + 1)
-        
-        while free_hos:
+
+    while free_hos:
         hos = free_hos[0]
         stu = hos_prefs[hos][next_proposal_index[hos]]
         next_proposal_index[hos] += 1
@@ -17,7 +18,7 @@ def gale_shapley(n, hos_prefs, stu_prefs):
             stu_matches[stu] = hos
             free_hos.pop(0)
         else:
-            curr= stu_matches[stu]
+            curr = stu_matches[stu]
             if stu_prefs[stu].index(hos) < stu_prefs[stu].index(curr):
                 hos_matches[hos] = stu
                 stu_matches[stu] = hos
@@ -25,7 +26,8 @@ def gale_shapley(n, hos_prefs, stu_prefs):
                 free_hos.pop(0)
                 free_hos.append(curr)
 
-    return hos_matches[1:], stu_matches[1:]
+    return hos_matches[1:] 
+
 
 def read_input(filename):
     with open(filename, "r") as f:
@@ -61,3 +63,13 @@ def write_output(filename, results):
                 f.write(f"{i} {s}\n")
             if case_index != len(results) - 1:
                 f.write("\n") 
+
+
+test_cases = read_input("example.txt")
+results = []
+
+for n, hos_prefs, stu_prefs in test_cases:
+    matches = gale_shapley(n, hos_prefs, stu_prefs)
+    results.append(matches)
+
+write_output("output.txt", results)
