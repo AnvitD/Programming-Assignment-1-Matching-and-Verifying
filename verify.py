@@ -40,32 +40,62 @@ def verify(input_file, output_file):
             j += 1
 
         matches = [0] * n
+        seen_h = [0] * (n + 1)
+
+        valid = True
+        stable = True
+        reason = ""
+        blocking_pair = None
+
         for _ in range(n):
             h, s = map(int, out[j].split())
             j += 1
+
+            if h < 1 or h > n:
+                valid = False
+                reason = "hospital out of range"
+                break
+            if seen_h[h] == 1:
+                valid = False
+                reason = "duplicate hospital"
+                break
+
+            seen_h[h] = 1
             matches[h - 1] = s
 
-        valid = True
-        seen = [0] * (n + 1)
-
-        for h in range(1, n + 1):
-            s = matches[h - 1]
-            if s < 1 or s > n:
-                valid = False
-            else:
-                seen[s] += 1
-
-        for s in range(1, n + 1):
-            if seen[s] != 1:
-                valid = False
-
-        stu_match = [0] * (n + 1)
+    
         if valid:
+  
+            for h in range(1, n + 1):
+                if seen_h[h] != 1:
+                    valid = False
+                    reason = "duplicate hospital"
+                    break
+
+        if valid:
+    
+            seen_s = [0] * (n + 1)
+            for h in range(1, n + 1):
+                s = matches[h - 1]
+                if s < 1 or s > n:
+                    valid = False
+                    reason = "student out of range"
+                    break
+                seen_s[s] += 1
+
+            if valid:
+                for s in range(1, n + 1):
+                    if seen_s[s] != 1:
+                        valid = False
+                        reason = "duplicate/missing student"
+                        break
+
+        if valid:
+       
+            stu_match = [0] * (n + 1)
             for h in range(1, n + 1):
                 stu_match[matches[h - 1]] = h
 
-        stable = True
-        if valid:
             for h in range(1, n + 1):
                 curr_s = matches[h - 1]
 
@@ -74,16 +104,22 @@ def verify(input_file, output_file):
                         break
 
                     curr_h = stu_match[s]
-
                     if stu_prefs[s - 1].index(h) < stu_prefs[s - 1].index(curr_h):
                         stable = False
+                        blocking_pair = (h, s)
+                        break
 
-        if valid and stable:
-            print("Case", case_num + 1, "PASS (valid + stable)")
-        elif valid and (not stable):
-            print("Case", case_num + 1, "FAIL (valid + NOT stable)")
+                if not stable:
+                    break
+
+        if not valid:
+            print(f"INVALID ({reason})")
+        elif stable:
+            print("VALID STABLE")
         else:
-            print("Case", case_num + 1, "FAIL (NOT valid + NOT stable)")
+            bh, bs = blocking_pair
+            print(f"UNSTABLE (blocking pair: {bh} {bs})")
 
 
-verify("example.txt", "output.txt")
+if __name__ == "__main__":
+    verify("input.txt", "output.txt")
