@@ -80,11 +80,12 @@ def write_output(filename, results):
                 f.write("\n") 
 
 
-test_cases = read_input("Prog 1/input.txt")
-results = []
+if __name__ == "__main__":
+    test_cases = read_input("input.txt")
+    results = []
 
-for n, hos_prefs, stu_prefs in test_cases:
-    matches = gale_shapley(n, hos_prefs, stu_prefs)
-    results.append(matches)
+    for n, hos_prefs, stu_prefs in test_cases:
+        matches = gale_shapley(n, hos_prefs, stu_prefs)
+        results.append(matches)
 
-write_output("output.txt", results)
+    write_output("output.txt", results)
