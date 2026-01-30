@@ -2,6 +2,9 @@ def read_input(filename):
     with open(filename, "r") as f:
         lines = [line.strip() for line in f if line.strip()]
 
+    if len(lines) == 0:
+        return [], "missing input value"
+
     index = 0
     test_cases = []
 
@@ -13,19 +16,31 @@ def read_input(filename):
         stu_prefs = []
 
         for _ in range(n):
+            if index >= len(lines):
+                return [], "missing input value"
+            if len(lines[index].split()) != n:
+                return [], "missing input value"
             hos_prefs.append(list(map(int, lines[index].split())))
             index += 1
 
         for _ in range(n):
+            if index >= len(lines):
+                return [], "missing input value"
+            if len(lines[index].split()) != n:
+                return [], "missing input value"
             stu_prefs.append(list(map(int, lines[index].split())))
             index += 1
 
         test_cases.append((n, hos_prefs, stu_prefs))
 
-    return test_cases
+    return test_cases, ""
+
 
 def verify(input_file, output_file):
-    test_cases = read_input(input_file)
+    test_cases, input_reason = read_input(input_file)
+    if input_reason != "":
+        print(f"INVALID ({input_reason})")
+        return
 
     out = []
     for line in open(output_file, "r"):
@@ -48,7 +63,18 @@ def verify(input_file, output_file):
         blocking_pair = None
 
         for _ in range(n):
-            h, s = map(int, out[j].split())
+            if j >= len(out):
+                valid = False
+                reason = "missing output value"
+                break
+
+            parts = out[j].split()
+            if len(parts) != 2:
+                valid = False
+                reason = "missing output value"
+                break
+
+            h, s = map(int, parts)
             j += 1
 
             if h < 1 or h > n:
@@ -63,9 +89,7 @@ def verify(input_file, output_file):
             seen_h[h] = 1
             matches[h - 1] = s
 
-    
         if valid:
-  
             for h in range(1, n + 1):
                 if seen_h[h] != 1:
                     valid = False
@@ -73,7 +97,6 @@ def verify(input_file, output_file):
                     break
 
         if valid:
-    
             seen_s = [0] * (n + 1)
             for h in range(1, n + 1):
                 s = matches[h - 1]
@@ -91,7 +114,6 @@ def verify(input_file, output_file):
                         break
 
         if valid:
-       
             stu_match = [0] * (n + 1)
             for h in range(1, n + 1):
                 stu_match[matches[h - 1]] = h
